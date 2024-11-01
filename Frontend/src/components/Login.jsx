@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try{
+            await axios.post('/login',{email, password});
+            setEmail("")
+            setPassword("")
+            navigate("/");
+        }catch(e){
+            console.log(e);
+        }
+    };
 
     return (
         <section className="bg-[#F4F7FF] py-20 lg:py-[120px]">
@@ -14,7 +28,7 @@ const Login = () => {
                             <div className="mb-10 text-center md:mb-16">
                                 <img src="/img/logo.png" alt="Logo da Intranet" className="logo" />
                             </div>
-                            <form>
+                            <form onSubmit={handleLogin}>
                                 <div className="mb-6">
                                     <input
                                         type="email"

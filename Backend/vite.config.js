@@ -10,4 +10,14 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        proxy: {
+            '/login': {
+                target: 'http://localhost:8000',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/login/, '/login'),
+            },
+            // Adicione outras rotas que você deseja proxy
+        },
+    },
 });
